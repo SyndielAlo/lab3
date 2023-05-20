@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
+  <script src="https://code.jscharting.com/latest/jscharting.js"></script>
+	<!-- My CSS -->
+	
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+  
+    <!-- Data From Firebase to DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+  
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+    <!-- Include DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="css/dbstyle.css">
+     
+    <!-- Modal -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <Style>
+         .modal-body{
+          display: inline-block;
+          width: 100px;
+         }
+      </Style>
+
+	<title>Admin</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">Admin</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="dashboard.html">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+        
+			<li>
+				<a href="index.html">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Logout</span>
+				</a>
+					
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<form action="#">
+				<div class="form-input">
+					<input type="search" placeholder="Search...">
+				</div>
+			</form>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				<span class="num">8</span>
+			</a>
+
+			
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+	
+			</div>
+
+			<ul class="box-info">
+                <li>
+					<span class="text">
+                        <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#staticBackdrop3">ADD</button>
+            </div>
+					</span>
+				</li>
+			</ul>
+
+
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Survey</h3>
+						<div class="form-input">
+              <input type="search" id="searchInput" placeholder="Search..." oninput="searchTable()">
+            </div>
+					</div>
+                    <table id="myTable" class="display">
+                        <thead>
+                          <tr> 
+                            <th>#N0.</th>
+                            <th>Time started</th>
+                            <th>To List</th>
+                            <th>Activity END</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="tbody1">
+                        </tbody>
+                      </table>
+                      <div id="pagination"></div>
+                      
+
+
+
+
+				</div>
+        
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop2" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>successfully Deleted!</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal edit -->
+<div class="modal fade" id="staticBackdrop1" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel1">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"name="edButton">
+          <label for="ID" > ID</label>
+          <input type="text" name="ID"id="IDED" readonly >
+          <label for="start" > Started Date</label>
+          <input type="date" name="start"id="startedED" >
+          <label for="activity">Activity</label>
+          <input type="text" name="activity"id="activityED">
+          <label for="End">End Date</label>
+          <input type="date" name="End"id="endED">
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="edButton" type="button" class="btn btn-primary">Edit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--add modal -->
+<div class="modal fade" id="staticBackdrop3" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Add</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body"name="addButton">
+            <label for="start" > Started Date</label>
+            <input type="date" name="start"id="startedAD" >
+            <label for="activity">Activity</label>
+            <input type="text" name="activity"id="activityAD">
+            <label for="End">End Date</label>
+            <input type="date" name="End"id="endAD">
+  
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="addButton" type="button" class="btn btn-primary">ADD</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+	</section>
+  <script type="module">
+   
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, updateDoc,deleteDoc, getDoc, query, collection, where, getDocs, onSnapshot  } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    
+    
+    
+    const firebaseConfig = {
+    apiKey: "AIzaSyBlv3H_SbwTDnCiGhIEpm5JlnStk4GQAw8",
+    authDomain: "to-do-list-40f45.firebaseapp.com",
+    projectId: "to-do-list-40f45",
+    storageBucket: "to-do-list-40f45.appspot.com",
+    messagingSenderId: "731869460635",
+    appId: "1:731869460635:web:3600f0f8d6452f3d62ee3e",
+    measurementId: "G-DX6V08HDKR"
+  };
+         
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    console.log(app);
+
+    //DataTables
+    firebase.initializeApp(firebaseConfig);
+    const db2 = firebase.firestore();  // Function for Database Firestore 
+    
+    
+   
+    
+    //------------------------------------Get Data------------------------------------------//
+    var dataNo =0;
+    var datasets = [];
+    var tbody = document.getElementById('tbody1');
+    
+    
+    function AddItemToTable(id,start, todo,end ){
+      var trow = document.createElement('tr');
+      // var td0 = document.createElement('td'); 
+      var td1 = document.createElement('td');
+      var td2 = document.createElement('td');
+      var td3 = document.createElement('td');
+      var td4 = document.createElement('td');
+      
+    
+      // td0.innerHTML = ''; 
+      td1.innerHTML = ++dataNo;
+      td2.innerHTML = start;
+      td3.innerHTML = todo;
+      td4.innerHTML = end;
+      
+     
+      datasets.push([id,start, todo,end]);
+    
+      // trow.appendChild(td0); 
+      trow.appendChild(td1);
+      trow.appendChild(td2);
+      trow.appendChild(td3);
+      trow.appendChild(td4);
+      var ControlDiv = document.createElement('div');
+      ControlDiv.innerHTML += ' <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#staticBackdrop1" onclick="FillTboxes(' + dataNo + ',\'' + id + '\')">Update</button>';
+      ControlDiv.innerHTML += ' <button type="button" class="btn btn-danger my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="DelButt(\'' + id + '\')">Delete</button>';
+     
+      trow.appendChild(ControlDiv);
+      tbody.appendChild(trow);
+    
+    }
+    
+    
+    function populateTableList(list){
+      dataNo=0;
+      tbody.innerHTML="";
+      list.forEach(element => {
+        AddItemToTable(element.id,element.start,element.todo,element.end);
+    
+      })
+    }
+    
+    
+    function GetAllDataRealtime(){
+      const q = query(collection(db, "activity"))
+      const list = onSnapshot(q, (querySnapshot) => {
+         var datasetss = [];
+    
+        querySnapshot.forEach(doc => {
+          const data = doc.data();
+          datasetss.push({...data, id: doc.id}); 
+          console.log(doc.id)
+        })
+        datasetss.sort((a, b) => (a.started > b.started) ? 1 : -1);
+        populateTableList(datasetss)
+      })
+    }
+    
+    window.onload = GetAllDataRealtime;
+    
+    
+    //------------------------------------Edit Data ------------------------------------------//
+var ID1 = document.getElementById('IDED')   
+var start = document.getElementById('startedED');
+var todo = document.getElementById('activityED');
+var end = document.getElementById('endED'); 
+var EditBtn = document.querySelector("#edButton");
+
+window.FillTboxes = function(id, docId) {
+  --id;
+  ID1.value = datasets[id][0];
+  start.value = datasets[id][1];
+  todo.value = datasets[id][2];
+  end.value = datasets[id][3];
+  EditBtn.dataset.id = docId;
+};
+
+const saveEdit = document.querySelector("#edButton")
+saveEdit.addEventListener("click", async () =>{
+  try {
+    const docRef = doc(db,"activity", EditBtn.dataset.id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      await setDoc(docRef, {
+        start: start.value,
+        todo:  todo.value,
+        end: end.value,
+      
+
+      });
+    }
+    const editDataModal = document.getElementById('staticBackdrop1');
+    const modal = bootstrap.Modal.getInstance(editDataModal);
+    modal.hide();
+    alert("updated successfully!!");
+  } catch (error) {
+    console.log(error)
+  }
+});
+
+
+
+    //------------------------------------Delete Data------------------------------------------//
+    
+    //------------------------------------------------OG Delete Button
+    window.DelButt = async function(id) {
+      const docRef = doc(db, "activity", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        await deleteDoc(docRef);
+        setData(data.filter((item)=> item.id !==id));
+        console.log(doc.id)
+      } else {
+        console.log("Document does not exist");
+      }
+    }
+
+
+var start1 = document.getElementById('startedAD');
+var todo2 = document.getElementById('activityAD');
+var end3 = document.getElementById('endAD');  
+
+const add = document.querySelector("#addButton");
+add.addEventListener("click", async () => {
+  try {
+    const collectionRef = collection(db, "activity"); 
+    const docRef = doc(collectionRef);
+    await setDoc(docRef, {
+        start: start1.value,
+        todo:  todo2.value,
+        end: end3.value,
+    });
+
+    const addDataModal = document.getElementById('staticBackdrop3');
+    const modal = bootstrap.Modal.getInstance(addDataModal);
+    modal.hide();
+    alert("ADD successfully!!");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+    
+    
+    
+    function searchTable() {
+  var input, filter, table, tr, td, i, j, txtValue;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 0; i < tr.length; i++) {
+    var found = false;
+    for (j = 0; j < tr[i].cells.length; j++) {
+      td = tr[i].cells[j];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          found = true;
+          break;
+        }
+      }
+    }
+    if (found) {
+      tr[i].style.display = "";
+    } else {
+      tr[i].style.display = "none";
+    }
+  }
+}
+
+
+
+
+    
+function updatePagination() {
+  var pageSize = 10; // Number of rows per page
+  var table = document.getElementById("myTable");
+  var rows = table.getElementsByTagName("tr");
+
+  // Hide all rows
+  for (var i = 0; i < rows.length; i++) {
+    rows[i].style.display = "none";
+  }
+
+  // Show the rows for the current page
+  var currentPage = 1; // Set the current page number
+  var start = (currentPage - 1) * pageSize + 1;
+  var end = currentPage * pageSize;
+  for (var j = start - 1; j < end && j < rows.length; j++) {
+    rows[j].style.display = "";
+  }
+
+  // Update the pagination links
+  var pagination = document.getElementById("pagination");
+  var totalPages = Math.ceil(rows.length / pageSize);
+  var paginationHTML = "";
+  for (var k = 1; k <= totalPages; k++) {
+    paginationHTML += "<a href='#' onclick='changePage(" + k + ")'>" + k + "</a>";
+  }
+  pagination.innerHTML = paginationHTML;
+}
+
+function changePage(page) {
+  var pagination = document.getElementById("pagination");
+  var links = pagination.getElementsByTagName("a");
+
+  // Update the active page link
+  for (var i = 0; i < links.length; i++) {
+    links[i].classList.remove("active");
+  }
+  links[page - 1].classList.add("active");
+
+  // Update the table rows
+  updatePagination();
+}
+
+// Call updatePagination initially
+updatePagination();
+
+
+
+    </script>
+     
+      
+    
+	
+   
+</body>
+
+
+</html>
